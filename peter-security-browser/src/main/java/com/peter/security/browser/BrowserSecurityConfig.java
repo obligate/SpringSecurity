@@ -15,7 +15,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.peter.security.core.properties.SecurityProperties;
-import com.peter.security.core.validate.code.ValidateCodeController;
 import com.peter.security.core.validate.code.ValidateCodeFilter;
 
 /**
@@ -35,6 +34,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 //		http.httpBasic().disable();  // 禁用密码验证
 		ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
 		validateCodeFilter.setAuthenticationFailureHandler(peterAuthenticationFailureHandler);
+		validateCodeFilter.setSecurityProperties(securityProperties);
+		validateCodeFilter.afterPropertiesSet();
 		http
 			.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class) // 把图片验证的filter放到UsernamePasswordAuthenticationFilter过滤器前面，如果验证失败，直接调用peterAuthenticationFailureHandler进行错误处理
 			.formLogin()   // 表单认证

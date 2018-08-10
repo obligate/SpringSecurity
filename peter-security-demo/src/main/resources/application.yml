@@ -6,10 +6,15 @@ spring:
     password: root
   session:
     store-type: none
-#peter: 
-#  security: 
+peter: 
+  security: 
 #    browser:
 ##      loginPage: /demo-signIn.html
 #       loginType: REDIRECT
-
+     code:
+      image:
+        length: 6   ## 应用级会覆盖默认配置
+        width: 100  ## browser中signIn.html页面页配置了改参数，请求级会覆盖应用级配置
+        url: /user/*  ## 配置验证码拦截的接口,用逗号分隔，  /user,/user/*
+  
 
