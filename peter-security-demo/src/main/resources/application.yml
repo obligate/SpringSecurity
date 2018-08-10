@@ -6,5 +6,9 @@ spring:
     password: root
   session:
     store-type: none
+#peter: 
+#  security: 
+#    browser:
+#      loginPage: /demo-signIn.html
 
 
