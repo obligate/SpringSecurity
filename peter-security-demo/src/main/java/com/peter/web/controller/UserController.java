@@ -12,6 +12,8 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +43,31 @@ import io.swagger.annotations.ApiParam;
 @RestController 
 @RequestMapping("/user")
 public class UserController {
+	
+//	@GetMapping("/me")
+//	public Object getCurrentUser() {
+//		return SecurityContextHolder.getContext().getAuthentication();
+//	}
+	
+//	/**
+//	 * 传入Authentication,spring默认会从SecurityContextHolder找,相对于上面可以简化代码
+//	 * @param authentication
+//	 * @return
+//	 */
+//	@GetMapping("/me")
+//	public Object getCurrentUser(Authentication authentication) {
+//		return authentication;
+//	}
+	
+	/**
+	 * 只返回用户相关的信息
+	 * @param userDetails
+	 * @return
+	 */
+	@GetMapping("/me")
+	public Object getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
+		return userDetails;
+	}
 	
 	@PostMapping
 	public User createUser(@Valid @RequestBody User user, BindingResult errors) {
