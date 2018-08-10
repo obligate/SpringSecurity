@@ -1,0 +1,21 @@
+#idea
+*.iml
+.idea/
+out/
+bin/
+
+# maven
+target/
+dependency-reduced-pom.xml
+
+# gradle
+.gradle/
+
+
+# eclipse
+.classpath
+.project
+.settings/
+bin/
+.springBeans
+
