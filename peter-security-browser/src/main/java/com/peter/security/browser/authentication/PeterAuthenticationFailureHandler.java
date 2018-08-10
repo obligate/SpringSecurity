@@ -18,6 +18,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.peter.security.browser.support.SimpleResponse;
 import com.peter.security.core.properties.LoginType;
 import com.peter.security.core.properties.SecurityProperties;
 
@@ -43,7 +44,9 @@ public class PeterAuthenticationFailureHandler extends SimpleUrlAuthenticationFa
 		if(LoginType.JSON.equals(securityProperties.getBrowser().getLoginType())) {
 			response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
 			response.setContentType("application/json;charset=UTF-8");
-			response.getWriter().write(ObjectMapper.writeValueAsString(exception));
+//			response.getWriter().write(ObjectMapper.writeValueAsString(exception));
+			// 只返回错误消息
+			response.getWriter().write(ObjectMapper.writeValueAsString(new SimpleResponse(exception.getMessage())));
 		}else {
 			super.onAuthenticationFailure(request, response, exception);
 		}
