@@ -15,7 +15,7 @@ import com.peter.security.core.validate.code.ValidateCodeGenerator;
  * @author peter
  *
  */
-@Component("imageCodeGenerator")
+//@Component("imageCodeGenerator")
 public class DemoImageCodeGenerator implements ValidateCodeGenerator {
 
 	@Override
