@@ -49,6 +49,10 @@ public class ValidateCodeController {
 	public void createCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		ImageCode imageCode = ImageCodeGenerator.gernerate(new ServletWebRequest(request));
 		sessionStrategy.setAttribute(new ServletWebRequest(request), SESSION_KEY, imageCode);
+        response.setContentType("image/jpeg");
+        response.setHeader("Pragma", "no-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        
 		ImageIO.write(imageCode.getImage(), "JPEG", response.getOutputStream());
 	}
 }
