@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.peter.security.core.properties.SecurityProperties;
+import com.peter.security.core.validate.code.image.ImageCodeGenerator;
+import com.peter.security.core.validate.code.sms.DefaultSmsCodeSender;
+import com.peter.security.core.validate.code.sms.SmsCodeSender;
 
 /**
  * @author peter
@@ -27,5 +30,11 @@ public class ValidateCodeBeanConfig {
 		ImageCodeGenerator codeGenerator = new ImageCodeGenerator();
 		codeGenerator.setSecurityProperties(securityProperties);
 		return codeGenerator;
+	}
+	
+	@Bean
+	@ConditionalOnMissingBean(SmsCodeSender.class) 
+	public SmsCodeSender smsCodeSender() {
+		return new DefaultSmsCodeSender();
 	}
 }

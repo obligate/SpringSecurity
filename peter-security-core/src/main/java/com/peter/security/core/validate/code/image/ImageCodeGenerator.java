@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.peter.security.core.validate.code;
+package com.peter.security.core.validate.code.image;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 
 import com.peter.security.core.properties.SecurityProperties;
+import com.peter.security.core.validate.code.ValidateCodeGenerator;
 
 /**
  * 图形验证码生成器
@@ -27,7 +28,7 @@ public class ImageCodeGenerator implements ValidateCodeGenerator {
 	private SecurityProperties securityProperties;
 	
 	@Override
-	public ImageCode gernerate(ServletWebRequest request) {
+	public ImageCode generate(ServletWebRequest request) {
 		// 默认从request获取width，没有从properties中获取
 		int width = ServletRequestUtils.getIntParameter(request.getRequest(), "width",
 				securityProperties.getCode().getImage().getWidth());
