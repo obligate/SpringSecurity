@@ -25,15 +25,15 @@ public class ValidateCodeBeanConfig {
 	
 	@Bean
 	// 先从Spring容器中查找是否存在imageCodeGenerator的bean，如果不存在使用下面创建的bean
-	@ConditionalOnMissingBean(name = "imageCodeGenerator") 
-	public ValidateCodeGenerator imageCodeGenerator() {
-		ImageCodeGenerator codeGenerator = new ImageCodeGenerator();
+	@ConditionalOnMissingBean(name = "imageValidateCodeGenerator")
+	public ValidateCodeGenerator imageValidateCodeGenerator() {
+		ImageCodeGenerator codeGenerator = new ImageCodeGenerator(); 
 		codeGenerator.setSecurityProperties(securityProperties);
 		return codeGenerator;
 	}
 	
 	@Bean
-	@ConditionalOnMissingBean(SmsCodeSender.class) 
+	@ConditionalOnMissingBean(SmsCodeSender.class)
 	public SmsCodeSender smsCodeSender() {
 		return new DefaultSmsCodeSender();
 	}

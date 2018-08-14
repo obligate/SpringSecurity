@@ -18,7 +18,7 @@ import com.peter.security.core.validate.code.ValidateCodeGenerator;
  * @author peter
  *
  */
-@Component("smsCodeGenerator")
+@Component("smsValidateCodeGenerator")
 public class SmsCodeGenerator implements ValidateCodeGenerator {
 
 	@Autowired

@@ -21,8 +21,10 @@ public class SmsCodeAuthenticationSecurityConfig extends SecurityConfigurerAdapt
 	
 	@Autowired
 	private AuthenticationSuccessHandler peterAuthenticationSuccessHandler;
+	
 	@Autowired
 	private AuthenticationFailureHandler peterAuthenticationFailureHandler;
+	
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
@@ -37,9 +39,7 @@ public class SmsCodeAuthenticationSecurityConfig extends SecurityConfigurerAdapt
 		SmsCodeAuthenticationProvider smsCodeAuthenticationProvider = new SmsCodeAuthenticationProvider();
 		smsCodeAuthenticationProvider.setUserDetailsService(userDetailsService);
 		
-		http.authenticationProvider(smsCodeAuthenticationProvider) // 把smsCodeAuthenticationProvider放到auenticationProvider管理中
+		http.authenticationProvider(smsCodeAuthenticationProvider)
 			.addFilterAfter(smsCodeAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-		
 	}
-
 }

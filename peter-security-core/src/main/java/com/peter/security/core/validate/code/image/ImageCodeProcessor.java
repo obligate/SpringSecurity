@@ -13,7 +13,7 @@ import com.peter.security.core.validate.code.impl.AbstractValidateCodeProcessor;
  * @author peter
  *
  */
-@Component("imageCodeProcessor")
+@Component("imageValidateCodeProcessor")
 public class ImageCodeProcessor extends AbstractValidateCodeProcessor<ImageCode> {
 	/**
 	 * 发送图形验证码，将其写到响应中
