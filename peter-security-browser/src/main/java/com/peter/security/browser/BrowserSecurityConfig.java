@@ -19,7 +19,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
+import com.peter.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.peter.security.core.properties.SecurityProperties;
+import com.peter.security.core.validate.code.SmsCodeFilter;
 import com.peter.security.core.validate.code.ValidateCodeFilter;
 
 /**
@@ -40,6 +42,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
+	@Autowired
+	private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 //		http.httpBasic().disable();  // 禁用密码验证
@@ -47,7 +52,14 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 		validateCodeFilter.setAuthenticationFailureHandler(peterAuthenticationFailureHandler);
 		validateCodeFilter.setSecurityProperties(securityProperties);
 		validateCodeFilter.afterPropertiesSet();
+		
+		SmsCodeFilter smsCodeFilter = new SmsCodeFilter();
+		smsCodeFilter.setAuthenticationFailureHandler(peterAuthenticationFailureHandler);
+		smsCodeFilter.setSecurityProperties(securityProperties);
+		smsCodeFilter.afterPropertiesSet();
+		
 		http
+			.addFilterBefore(smsCodeFilter, UsernamePasswordAuthenticationFilter.class)
 			.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class) // 把图片验证的filter放到UsernamePasswordAuthenticationFilter过滤器前面，如果验证失败，直接调用peterAuthenticationFailureHandler进行错误处理
 			.formLogin()   // 表单认证
 				.loginPage("/authentication/require") // 自定义登录页面
@@ -68,7 +80,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 			.anyRequest()
 			.authenticated()
 			.and()
-			.csrf().disable(); // 跨站防护功能关闭
+			.csrf().disable() // 跨站防护功能关闭
+			.apply(smsCodeAuthenticationSecurityConfig); 
 	}
 	
     @Bean
